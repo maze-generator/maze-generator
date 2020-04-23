@@ -1,20 +1,5 @@
 import Cell from '../classes/cell'
 
-export interface Map {
-	dimensions: Array<number>
-	magnitudes: Array<number>
-	size: number
-	degree: number
-	data: Array<Cell>
-}
-
-export interface Compass {
-	layout: shape
-	rose: Record<string, number>
-	directions: Set<string>
-	antipodes: Record<string, string>
-}
-
 export interface Generator {
 	method: algorithm
 	functions: (test:string) => (string)
