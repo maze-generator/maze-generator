@@ -1,5 +1,3 @@
-import Cell from '../classes/cell'
-
 export interface Generator {
 	method: algorithm
 	functions: (test:string) => (string)
