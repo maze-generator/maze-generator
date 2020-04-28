@@ -1,17 +1,17 @@
-import Cell from '../classes/cell'
+import Graph, {Cell} from 'tessellatron'
 import {shuffle} from '../helpers/main'
 
 /*********DEPTH-FIRST SEARCH*****************************/
 
 export const recursiveDFS = (
-	mapData: Array<Cell>,
+	maze: Graph,
 	id01: number,
 ): void => {
 
 	// create cell from id.
-	const cell01: Cell = mapData[id01]
+	const cell01: Cell = maze.data[id01]
 
-	// mark self as active.
+	// mark self as 'active'.
 	cell01.status = 'active'
 
 	// TODO: await command to continue.
@@ -21,22 +21,29 @@ export const recursiveDFS = (
 	const eligibleDirs: Array<string> = Object.keys(cell01.neighbors)
 	const randomDirs: Array<string> = shuffle(eligibleDirs)
 	for (const direction of randomDirs) {
-
 		// identify the neighbor cell.
-		const id02: number = cell01.neighbors[direction]
-		const cell02: Cell = mapData[id02]
+		const id02: number|null = cell01.neighbors[direction]
 
-		// check for unvisited neighbors.
-		if (cell02.status === 'unvisited') {
+		// ensure neighbor exists
+		if (id02 !== null) {
+			const cell02: Cell = maze.data[id02]
 
-			// connect the cells
-			cell01.addPassage(direction, id02)
+			// check for unvisited neighbors.
+			if (cell02.status === 'unvisited') {
 
-			// transfer 'active' state to id02.
-			cell01.status = 'passive'
+				// connect the cells
+				maze.connectNeighbor(direction, id01, id02)
+				maze.connectPassage(direction, id01, id02)
 
-			// recursively call with new neighbor.
-			recursiveDFS(mapData, id02)
+				// transfer 'active' state to id02.
+				cell01.status = 'passive'
+
+				// recursively call with new neighbor.
+				recursiveDFS(maze, id02)
+			}
+
+			// mark self as 'active'.
+			cell01.status = 'active'
 		}
 	}
 

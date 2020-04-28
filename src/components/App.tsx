@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
+import Graph from 'tessellatron'
+// import Graphic from '../classes/unicode-graphic'
 import './App.css'
-import Maze from '../classes/maze/tetragon'
-import Graphic from '../classes/unicode-graphic'
+import {recursiveDFS} from '../helpers/generator'
 
-const myMaze = new Maze([3,2])
-const myVisual = new Graphic(myMaze)
-const results: string = myVisual.pipeMaze()
+let myMaze = new Graph([5,5])
+recursiveDFS(myMaze, 0)
 
-console.log(myVisual.pipeMaze())
-myMaze.generate(0)
-console.log(myVisual.pipeMaze())
-console.log(myMaze.json)
+console.log(myMaze)
 
 const App = () => {
-	const [words, setWords] = useState(results)
+	const [words, setWords] = useState('wow')
 	return (
 		<>
 			<h1>Maze Generator</h1>
@@ -23,10 +20,10 @@ const App = () => {
 			<input
 				type='button'
 				onClick={() => {
-					const newMaze = new Maze([50, 50])
-					newMaze.generate(0)
-					const newVisual = new Graphic(newMaze)
-					setWords(newVisual.pipeMaze())
+					myMaze = new Graph([5,5])
+					recursiveDFS(myMaze, 0)
+					console.log(myMaze)
+					setWords('cool')
 				}}
 				value='Generate'
 			/>
