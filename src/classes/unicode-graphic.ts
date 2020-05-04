@@ -1,40 +1,27 @@
-import Graph from 'tessellatron'
+import Graph, {Cell} from 'tessellatron'
 
-export default class UnicodeGraphic {
-	maze: Graph
-	constructor(maze: Graph) {
-		this.maze = maze
+// a pipe-maze is much more simple to make.
+// a player must follow lines to complete the maze.
+// while less traditional, it is very easy to make.
+// each vertex determinse a unicode character.
+export const createPipeMaze = (
+	graph: Graph
+) => {
+
+	// initialize result string with linebreak.
+	let graphic: string = '\n'
+
+	// loop through maze.
+	for (const [id, cell] of graph.data.entries()) {
+		graphic += getPipeGlyph(cell)
+
+		// add line break if end of line is reached
+		if (graph.findCoordinates(id)[0] === graph.dimensions[0]-1) {
+			graphic += '\n'
+		}
 	}
 
-	pipeMaze () {
-		// a pipe-maze is much more simple to make.
-		// a player must follow lines to complete the maze.
-		// while less traditional, it is very easy to make.
-		// each vertex determinse a unicode character.
-
-		//initialize empty result string.
-		let result = ''
-
-		// loop through maze.
-		this.maze.data.forEach((
-			cell:any,
-			index:number,
-		):void => {
-			// assumes there is a path in every direction.
-			const north:boolean = cell['passages']['north']
-			const south:boolean = cell['passages']['south']
-			const east:boolean = cell['passages']['east']
-			const west:boolean = cell['passages']['west']
-
-			// add line break if end of line is reached
-			if (index % this.maze.dimensions[0] === 0) {
-				result += '\n'
-			}
-			// get the symbol to be added to the result string
-			result += getGlyph(north, south, east, west, 'pipe')
-		})
-		return result
-	}
+	return graphic
 }
 
 /*
@@ -159,12 +146,9 @@ export default class UnicodeGraphic {
 		return result
 */
 
-const getGlyph = (
-	north:boolean,
-	south:boolean,
-	east:boolean,
-	west:boolean,
-	type:string,
+const getPipeGlyph = (
+	cell: Cell,
+	type: string = 'pipe',
 ):string => {
 
 	// this function returns a maze drawing character.
@@ -177,6 +161,9 @@ const getGlyph = (
 
 	let pipe = ''
 	let edge = ''
+
+	// deconstruct cell.
+	const {north, south, east, west} = cell.passages
 
 	// four passages
 	if (north && south && east && west) {

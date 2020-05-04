@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import Graph from 'tessellatron'
-// import Graphic from '../classes/unicode-graphic'
-import './App.css'
-import {recursiveDFS} from '../helpers/generator'
+import Maze from 'maze-algorithms'
+import {createPipeMaze} from '../classes/unicode-graphic'
 
-let myMaze = new Graph([5,5])
-recursiveDFS(myMaze, 0)
+import './App.css'
+
+let myMaze = new Maze([5,5])
 
 console.log(myMaze)
 
@@ -20,10 +19,11 @@ const App = () => {
 			<input
 				type='button'
 				onClick={() => {
-					myMaze = new Graph([5,5])
-					recursiveDFS(myMaze, 0)
+					myMaze = new Maze([2,2])
 					console.log(myMaze)
-					setWords('cool')
+					const maze = createPipeMaze(myMaze)
+					console.log(maze)
+					setWords(maze)
 				}}
 				value='Generate'
 			/>
