@@ -1,7 +1,7 @@
 {
 	"name": "my-app",
 	"homepage": "https://noltron000-coursework.github.io/maze-generator/",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"private": true,
 	"dependencies": {
 		"@testing-library/jest-dom": "^4.2.4",
@@ -11,9 +11,12 @@
 		"@types/node": "^12.0.0",
 		"@types/react": "^16.9.0",
 		"@types/react-dom": "^16.9.0",
+		"maze-algorithms": "^0.1.0",
+		"maze-visualizer": "^0.0.1",
 		"react": "^16.13.0",
 		"react-dom": "^16.13.0",
 		"react-scripts": "3.4.0",
+		"tessellatron": "^0.2.0",
 		"typescript": "~3.7.2"
 	},
 	"scripts": {
