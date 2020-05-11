@@ -13,22 +13,6 @@ layer 1:    layer 2:    layer 3:
 └─┴─┴─┘     └─┴─┴─┘     └─┴─┴─┘
 ***********************************************************/
 
-// a hexahedron is a six-sided polyhedron.
-export const hexahedronGyroscope = (
-	magnitudes: Array<number>,
-): Record<string, number> => {
-	// deconstruct magnitudes for each axis.
-	const [x, y, z]: Array<number> = magnitudes
-	// set a new rose of index-offsetters.
-	return {
-		'west':  -x,
-		'east':  +x,
-		'north': -y,
-		'south': +y,
-		'above': -z,
-		'below': +z,
-	}
-}
 
 /***********************************************************
 hexagons are interesting six-sided polygons.
