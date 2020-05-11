@@ -1,41 +1,69 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Maze from 'maze-algorithms'
-import {createPipeMaze} from 'maze-visualizer'
 import './App.css'
 
-let amazing = Maze([10,10])
+export default class App extends React.Component {
+	state: Record<string, any>
 
-let visual = createPipeMaze(amazing.graph)
-const generate = amazing.generator()
+	constructor (
+		props: any
+	) {
+		super(props)
 
-const App = () => {
-	const [words, setWords] = useState()
-	return (
+		const maze = Maze([10, 10])
+
+		this.state = {
+			maze: maze,
+			graph: maze.graph,
+			generate: maze.generator(),
+		}
+	}
+
+	updateSVG () {
+
+	}
+
+	render () { return (
 		<>
-			<h1>Maze Generator</h1>
+			<h1>
+				Maze Generator
+			</h1>
+
 			<p>
-				Generate your maze by clicking the button.
-				You will have to click it a bunch...!
-				Sometimes the stack empties and the state isnt changed.
-				Keep pressing until your maze is full.
+				Generate your maze by clicking the button a bunch.
 			</p>
+
 			<input
 				type='button'
-				onClick={() => {
-					generate.next()
-					visual = createPipeMaze(amazing.graph)
-					setWords(visual)
+				value='Generate One Step'
+
+				onClick={(
+				): void => {
+					// generate next step of algorithm.
+					this.state.generate.next()
+					this.updateSVG()
 				}}
-				value='Generate'
 			/>
 
-			<textarea
-				className='results'
-				value={words}
-				readOnly={true}
+			<input
+				type='button'
+				value='Generate Remainder'
+
+				onClick={(
+				): void => {
+					// generate all steps of the algorithm.
+					for (const _ of this.state.generate) {console.log(_)}
+					this.updateSVG()
+				}}
 			/>
+
+			<figure>
+				<div id='maze'>
+				</div>
+				<figcaption>
+					Figure 1: Maze Visual
+				</figcaption>
+			</figure>
 		</>
-	)
+	)}
 }
-
-export default App;
