@@ -15,6 +15,9 @@ const App = () => {
 			<h1>Maze Generator</h1>
 			<p>
 				Generate your maze by clicking the button.
+				You will have to click it a bunch...!
+				Sometimes the stack empties and the state isnt changed.
+				Keep pressing until your maze is full.
 			</p>
 			<input
 				type='button'
