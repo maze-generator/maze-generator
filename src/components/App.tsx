@@ -1,5 +1,6 @@
 import React from 'react'
 import Maze from 'maze-algorithms'
+import {createPipeMaze} from 'maze-visualizer'
 import './App.css'
 
 export default class App extends React.Component {
@@ -14,16 +15,21 @@ export default class App extends React.Component {
 
 		this.state = {
 			maze: maze,
-			graph: maze.graph,
+			graphic: '',
+			jsonString: '',
 			generate: maze.generator(),
 		}
 	}
 
-	updateSVG () {
-
+	updateGraphic () {
+		this.setState({graphic: createPipeMaze(this.state.maze.graph)})
+		const data = JSON.stringify(JSON.parse(this.state.maze.graph.json), null, 2)
+		this.setState({jsonString: data})
+		const node = (this.state.maze.graph.data.find((cell: any): boolean => {return cell.status === 'active'}) || {}).id
+		this.setState({nodeID: node})
 	}
 
-	render () { return (
+	render () {return(
 		<>
 			<h1>
 				Maze Generator
@@ -41,7 +47,7 @@ export default class App extends React.Component {
 				): void => {
 					// generate next step of algorithm.
 					this.state.generate.next()
-					this.updateSVG()
+					this.updateGraphic()
 				}}
 			/>
 
@@ -52,14 +58,18 @@ export default class App extends React.Component {
 				onClick={(
 				): void => {
 					// generate all steps of the algorithm.
-					for (const _ of this.state.generate) {console.log(_)}
-					this.updateSVG()
+					for (const _ of this.state.generate) {}
+					this.updateGraphic()
 				}}
 			/>
 
 			<figure>
-				<div id='maze'>
+				<div>
+					<label>active node: </label>
+					<output>{this.state.nodeID}</output>
 				</div>
+				<textarea value={this.state.graphic} readOnly />
+				<textarea value={this.state.jsonString} readOnly />
 				<figcaption>
 					Figure 1: Maze Visual
 				</figcaption>
