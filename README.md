@@ -14,6 +14,147 @@ The code is released under the [MIT License][license].
 This project was bootstrapped with react.
 Check out its readme [here][react].
 
+## Needed Functionality
+SHAPE NEEDED
+- Maze.isIndexValid (id) -> (boolean)
+- Maze.areNeighbors (Array of IDs) -> (boolean)
+- Maze.getCoordinates (Array of IDs) -> (Coordinates)
+- Maze.getTensorSlice (Coordinates) -> (Array of IDs)
+- Maze.getNeighbors (id) -> (Record of Directions to IDs)
+
+SHAPE NOT NEEDED
+- Cell.addNeighbor (id)
+- Cell.addPassage  (id)
+- Cell.hasPath () -> (boolean)
+- Cell.hasWall () -> (boolean)
+
+## `JSON` Output
+```json
+{
+	"algorithm":"recursive breadth-first traversal",
+	"map":{
+		"dimensions":[
+			3,
+			2
+		],
+		"magnitudes":[
+			1,
+			3
+		],
+		"size":6,
+		"data":[
+			{
+				"id":0,
+				"status":"complete",
+				"neighbors":{
+					"east":1,
+					"south":3
+				},
+				"passages":{
+					"west":false,
+					"east":false,
+					"north":false,
+					"south":true
+				}
+			},
+			{
+				"id":1,
+				"status":"complete",
+				"neighbors":{
+					"west":0,
+					"east":2,
+					"south":4
+				},
+				"passages":{
+					"west":false,
+					"east":true,
+					"north":false,
+					"south":true
+				}
+			},
+			{
+				"id":2,
+				"status":"complete",
+				"neighbors":{
+					"west":1,
+					"south":5
+				},
+				"passages":{
+					"west":true,
+					"east":false,
+					"north":false,
+					"south":true
+				}
+			},
+			{
+				"id":3,
+				"status":"complete",
+				"neighbors":{
+					"east":4,
+					"north":0
+				},
+				"passages":{
+					"west":false,
+					"east":true,
+					"north":true,
+					"south":false
+				}
+			},
+			{
+				"id":4,
+				"status":"complete",
+				"neighbors":{
+					"west":3,
+					"east":5,
+					"north":1
+				},
+				"passages":{
+					"west":true,
+					"east":false,
+					"north":true,
+					"south":false
+				}
+			},
+			{
+				"id":5,
+				"status":"complete",
+				"neighbors":{
+					"west":4,
+					"north":2
+				},
+				"passages":{
+					"west":false,
+					"east":false,
+					"north":true,
+					"south":false
+				}
+			}
+		]
+	},
+	"compass":{
+		"layout":"square",
+		"rose":{
+			"west":-1,
+			"east":1,
+			"north":-3,
+			"south":3
+		},
+		"directions":[
+			"west",
+			"east",
+			"north",
+			"south"
+		],
+		"antipodes":{
+			"west":"east",
+			"east":"west",
+			"north":"south",
+			"south":"north"
+		}
+	}
+}
+```
+
 <!--
 ## How To Use
 1. navigate to `src/` folder in terminal.

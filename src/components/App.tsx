@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
-import './App.css';
-import Maze from '../classes/maze'
-import Graphic from '../classes/unicode-graphic'
+import React, { useState } from 'react'
+import Maze from 'maze-algorithms'
+import {createPipeMaze} from 'maze-visualizer'
+import './App.css'
 
-const myMaze = new Maze([40,10])
-const myGraphic = new Graphic(myMaze)
+let amazing = Maze([10,10])
 
-console.log(myMaze)
+let visual = createPipeMaze(amazing.graph)
+const generate = amazing.generator()
 
 const App = () => {
-	const [words, setWords] = useState(myGraphic.pipeMaze())
+	const [words, setWords] = useState()
 	return (
 		<>
 			<h1>Maze Generator</h1>
 			<p>
 				Generate your maze by clicking the button.
+				You will have to click it a bunch...!
+				Sometimes the stack empties and the state isnt changed.
+				Keep pressing until your maze is full.
 			</p>
 			<input
 				type='button'
 				onClick={() => {
-					const newMaze = new Maze([40,10])
-					const newGraphic = new Graphic(newMaze)
-					setWords(newGraphic.pipeMaze())
+					generate.next()
+					visual = createPipeMaze(amazing.graph)
+					setWords(visual)
 				}}
 				value='Generate'
 			/>
