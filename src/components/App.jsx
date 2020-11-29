@@ -17,17 +17,27 @@ export default class App extends React.Component {
 			lengthInput: null,
 			heightInput: null,
 			styleOption: null,
+			methodOption: null,
 			generate: null,
 		}
 	}
 
 	createMazeGenerator () {
+		const mazeDimensions = [
+			this.state.lengthInput ?? 10,
+			this.state.heightInput ?? 10,
+		]
+		const mazeShape = 'hypercube'
+		const mazeMethod = this.state.methodOption
+			?? 'iterative depth-first traversal'
+
 		this.setState(
 			// Create a new maze object
-			{maze: new MazeGenerator([
-				this.state.lengthInput ?? 10,
-				this.state.heightInput ?? 10,
-			])},
+			{maze: new MazeGenerator(
+				mazeDimensions,
+				mazeShape,
+				mazeMethod,
+			)},
 
 			// Callback for setState()
 			this.updateMazeGenerator
@@ -92,7 +102,7 @@ export default class App extends React.Component {
 			<legend>Generator Parameters</legend>
 
 			<div>
-				<label>Maze Algorithm</label>
+				<label>Generator Method/Algorithm</label>
 				<div>
 					<div>
 						<input
@@ -101,7 +111,11 @@ export default class App extends React.Component {
 							name='maze-algorithm'
 							type='radio'
 							defaultChecked={true}
-							disabled={true || this.state.maze !== null}
+							disabled={this.state.maze !== null}
+
+							onChange={() => this.setState({
+								methodOption: 'iterative depth-first traversal'
+							})}
 						/>
 						<label htmlFor='iterative-depth-first-option'>
 							Iterative Depth-First Search
@@ -117,7 +131,11 @@ export default class App extends React.Component {
 							name='maze-algorithm'
 							type='radio'
 							defaultChecked={false}
-							disabled={true || this.state.maze !== null}
+							disabled={this.state.maze !== null}
+
+							onChange={() => this.setState({
+								methodOption: 'iterative breadth-first traversal'
+							})}
 						/>
 						<label htmlFor='iterative-breadth-first-option'>
 							Iterative Breadth-First Search
@@ -134,7 +152,11 @@ export default class App extends React.Component {
 							name='graphic-style'
 							type='radio'
 							defaultChecked={true}
-							disabled={true || this.state.maze !== null}
+							disabled={this.state.maze !== null}
+
+							onChange={() => this.setState({
+								styleOption: 'pipe'
+							})}
 						/>
 						<label htmlFor='pipe-style-option'>
 							Pipe-Style Text Graphic
@@ -148,7 +170,11 @@ export default class App extends React.Component {
 							name='graphic-style'
 							type='radio'
 							defaultChecked={false}
-							disabled={true || this.state.maze !== null}
+							disabled={this.state.maze !== null}
+
+							onChange={() => this.setState({
+								styleOption: 'edge'
+							})}
 						/>
 						<label htmlFor='edge-style-option'>
 							Edge-Style Text Graphic
