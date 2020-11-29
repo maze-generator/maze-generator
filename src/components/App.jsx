@@ -7,38 +7,57 @@ import {
 import './App.css'
 
 export default class App extends React.Component {
-	constructor (props) {
-		super(props)
-
-		const maze = new MazeGenerator([3, 3])
+	constructor () {
+		super()
 
 		this.state = {
-			maze: maze,
-			graphic: '',
-			jsonString: '',
-			nodeID: '',
-			generate: maze.generator(),
+			maze: null,
+			graphic: null,
+			json: null,
+			lengthInput: null,
+			heightInput: null,
+			styleOption: null,
+			generate: null,
 		}
 	}
 
-	restartGraphic () {
-		const maze = new MazeGenerator([3, 3])
+	createMazeGenerator () {
+		const maze = new MazeGenerator([
+			this.state.lengthInput ?? 10,
+			this.state.heightInput ?? 10,
+		])
+
+		let graphic = null
+		if (this.state.styleOption === null) {
+			this.setState({styleOption: 'pipe'})
+		}
+		if (this.state.styleOption === 'pipe') {
+			graphic = createPipedTextGraphic(maze.graph)
+		}
+		else if (this.state.styleOption === 'edge') {
+			graphic = createEdgedTextGraphic(maze.graph)
+		}
+
+		const json = JSON.stringify(JSON.parse(maze.graph.json), null, 2)
 
 		this.setState({
 			maze: maze,
-			graphic: '',
-			jsonString: '',
-			nodeID: '',
+			graphic: graphic,
+			json: json,
 			generate: maze.generator(),
 		})
 	}
 
-	updateGraphic () {
-		this.setState({graphic: createEdgedTextGraphic(this.state.maze.graph)})
-		const data = JSON.stringify(JSON.parse(this.state.maze.graph.json), null, 2)
-		this.setState({jsonString: data})
-		const node = (this.state.maze.graph.data.find((cell) => {return cell.status === 'active'}) || {}).id
-		this.setState({nodeID: node})
+	clearMazeGenerator () {
+		this.setState({
+			maze: null,
+			graphic: null,
+			json: null,
+			lengthInput: null,
+			heightInput: null,
+			styleOption: null,
+			generate: null,
+		})
 	}
 
 	render () { return ( <>
@@ -50,34 +69,48 @@ export default class App extends React.Component {
 			Generate your maze by clicking the button a bunch.
 		</p>
 
-		<input
-			type='button'
-			value='Generate One Step'
+		<fieldset>
+			<legend>Generator Parameters</legend>
 
-			onClick={() => {
-				// generate next step of algorithm.
-				this.state.generate.next()
-				this.updateGraphic()
-			}}
-		/>
+			<input
+				type='button'
+				value='↪️ Generate One Step'
+				disabled={this.state.maze === null}
 
-		<input
-			type='button'
-			value='Generate Remainder'
+				onClick={() => {
+					// generate next step of algorithm.
+					this.state.generate.next()
+				}}
+			/>
 
-			onClick={() => {
+			<input
+				type='button'
+				value='⏯ Play/Pause'
+				disabled={true}
+
+				onClick={() => {
 				// generate all steps of the algorithm.
-				for (const _ of this.state.generate) {}
-				this.updateGraphic()
-			}}
-		/>
+					for (const _ of this.state.generate) {}
+					this.updateGraphic()
+				}}
+			/>
 
-		<input
-			type='button'
-			value='Restart Graphic'
+			<input
+				type='button'
+				value='⏹ Stop Graphic'
+				disabled={this.state.maze === null}
 
-			onClick={() => {this.restartGraphic()}}
-		/>
+				onClick={() => {this.clearMazeGenerator()}}
+			/>
+
+			<input
+				type='button'
+				value='🔄 Start New Maze'
+				disabled={this.state.maze !== null}
+
+				onClick={() => {this.createMazeGenerator()}}
+			/>
+		</fieldset>
 
 		<figure>
 			<div>
