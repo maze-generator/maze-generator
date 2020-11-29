@@ -22,19 +22,30 @@ export default class App extends React.Component {
 	}
 
 	createMazeGenerator () {
-		const maze = new MazeGenerator([
-			this.state.lengthInput ?? 10,
-			this.state.heightInput ?? 10,
-		])
+		this.setState(
+			// Create a new maze object
+			{maze: new MazeGenerator([
+				this.state.lengthInput ?? 10,
+				this.state.heightInput ?? 10,
+			])},
+
+			// Callback for setState()
+			this.updateMazeGenerator
+		)
+	}
+
+	updateMazeGenerator () {
+		let {maze, generate, styleOption} = this.state
 
 		let graphic = null
-		if (this.state.styleOption === null) {
+		if (styleOption === null) {
 			this.setState({styleOption: 'pipe'})
-		}
-		if (this.state.styleOption === 'pipe') {
 			graphic = createPipedTextGraphic(maze.graph)
 		}
-		else if (this.state.styleOption === 'edge') {
+		if (styleOption === 'pipe') {
+			graphic = createPipedTextGraphic(maze.graph)
+		}
+		else if (styleOption === 'edge') {
 			graphic = createEdgedTextGraphic(maze.graph)
 		}
 
@@ -44,7 +55,7 @@ export default class App extends React.Component {
 			maze: maze,
 			graphic: graphic,
 			json: json,
-			generate: maze.generator(),
+			generate: generate ?? maze.generator(),
 		})
 	}
 
@@ -80,6 +91,8 @@ export default class App extends React.Component {
 				onClick={() => {
 					// generate next step of algorithm.
 					this.state.generate.next()
+					console.warn(this.state.maze.graph.data[0])
+					this.updateMazeGenerator()
 				}}
 			/>
 
@@ -117,8 +130,8 @@ export default class App extends React.Component {
 				<label>active node: </label>
 				<output>{this.state.nodeID}</output>
 			</div>
-			<textarea value={this.state.graphic} readOnly />
-			<textarea value={this.state.jsonString} readOnly />
+			<textarea value={this.state.graphic ?? ''} readOnly />
+			<textarea value={this.state.json ?? ''} readOnly />
 			<figcaption>
 				Figure 1: Maze Visual
 			</figcaption>
