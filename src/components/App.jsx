@@ -64,11 +64,19 @@ export default class App extends React.Component {
 			maze: null,
 			graphic: null,
 			json: null,
-			lengthInput: null,
-			heightInput: null,
-			styleOption: null,
 			generate: null,
 		})
+	}
+
+	validateNaturalNumber (value) {
+		if (value < 0) {
+			value = 0
+		}
+		else if (value === '' || isNaN(value)) {
+			value = null
+		}
+		console.log(value)
+		return value
 	}
 
 	render () { return ( <>
@@ -88,8 +96,9 @@ export default class App extends React.Component {
 				<div>
 					<div>
 						<input
-							name='maze-algorithm'
 							id='iterative-depth-first-option'
+							className='toggle'
+							name='maze-algorithm'
 							type='radio'
 							defaultChecked={true}
 							disabled={true || this.state.maze !== null}
@@ -103,8 +112,9 @@ export default class App extends React.Component {
 				<div>
 					<div>
 						<input
-							name='maze-algorithm'
 							id='iterative-breadth-first-option'
+							className='toggle'
+							name='maze-algorithm'
 							type='radio'
 							defaultChecked={false}
 							disabled={true || this.state.maze !== null}
@@ -119,8 +129,9 @@ export default class App extends React.Component {
 				<div>
 					<div>
 						<input
-							name='graphic-style'
 							id='pipe-style-option'
+							className='toggle'
+							name='graphic-style'
 							type='radio'
 							defaultChecked={true}
 							disabled={true || this.state.maze !== null}
@@ -132,8 +143,9 @@ export default class App extends React.Component {
 
 					<div>
 						<input
-							name='graphic-style'
 							id='edge-style-option'
+							className='toggle'
+							name='graphic-style'
 							type='radio'
 							defaultChecked={false}
 							disabled={true || this.state.maze !== null}
@@ -148,26 +160,47 @@ export default class App extends React.Component {
 			<div>
 				<label>Maze Length</label>
 				<input
+					className='input-box'
 					type='number'
 					placeholder='Default: 10'
 					min='0'
-					disabled={true || this.state.maze !== null}
+					disabled={this.state.maze !== null}
+					value={this.state.lengthInput ?? ''}
+
+					onChange={(event) => {
+						let {value} = event.target
+						if (value !== null) {
+							value = this.validateNaturalNumber(parseInt(value))
+						}
+						this.setState({lengthInput: value})
+					}}
 				/>
 			</div>
 
 			<div>
 				<label>Maze Height</label>
 				<input
+					className='input-box'
 					type='number'
 					placeholder='Default: 10'
 					min='0'
-					disabled={true || this.state.maze !== null}
+					disabled={this.state.maze !== null}
+					value={this.state.heightInput ?? ''}
+
+					onChange={(event) => {
+						let {value} = event.target
+						if (value !== null) {
+							value = this.validateNaturalNumber(parseInt(value))
+						}
+						this.setState({heightInput: value})
+					}}
 				/>
 			</div>
 
 			<div>
 				<label>Autogen Interval</label>
 				<input
+					className='input-box'
 					type='number'
 					placeholder='Default: 300'
 					min='0'
@@ -178,6 +211,7 @@ export default class App extends React.Component {
 			<hr />
 
 			<input
+				className='button'
 				type='button'
 				value='↪️ Generate One Step'
 				disabled={this.state.maze === null}
@@ -191,6 +225,7 @@ export default class App extends React.Component {
 			/>
 
 			<input
+				className='button'
 				type='button'
 				value='⏯ Play/Pause'
 				disabled={true}
@@ -203,6 +238,7 @@ export default class App extends React.Component {
 			/>
 
 			<input
+				className='button'
 				type='button'
 				value='⏹ Stop Graphic'
 				disabled={this.state.maze === null}
@@ -211,6 +247,7 @@ export default class App extends React.Component {
 			/>
 
 			<input
+				className='button'
 				type='button'
 				value='🔄 Start New Maze'
 				disabled={this.state.maze !== null}
