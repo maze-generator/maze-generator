@@ -83,15 +83,109 @@ export default class App extends React.Component {
 		<fieldset>
 			<legend>Generator Parameters</legend>
 
+			<div>
+				<label>Maze Algorithm</label>
+				<div>
+					<div>
+						<input
+							name='maze-algorithm'
+							id='iterative-depth-first-option'
+							type='radio'
+							defaultChecked={true}
+							disabled={true || this.state.maze !== null}
+						/>
+						<label htmlFor='iterative-depth-first-option'>
+							Iterative Depth-First Search
+						</label>
+					</div>
+				</div>
+
+				<div>
+					<div>
+						<input
+							name='maze-algorithm'
+							id='iterative-breadth-first-option'
+							type='radio'
+							defaultChecked={false}
+							disabled={true || this.state.maze !== null}
+						/>
+						<label htmlFor='iterative-breadth-first-option'>
+							Iterative Breadth-First Search
+						</label>
+					</div>
+				</div>
+
+				<label>Graphic Style</label>
+				<div>
+					<div>
+						<input
+							name='graphic-style'
+							id='pipe-style-option'
+							type='radio'
+							defaultChecked={true}
+							disabled={true || this.state.maze !== null}
+						/>
+						<label htmlFor='pipe-style-option'>
+							Pipe-Style Text Graphic
+						</label>
+					</div>
+
+					<div>
+						<input
+							name='graphic-style'
+							id='edge-style-option'
+							type='radio'
+							defaultChecked={false}
+							disabled={true || this.state.maze !== null}
+						/>
+						<label htmlFor='edge-style-option'>
+							Edge-Style Text Graphic
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<label>Maze Length</label>
+				<input
+					type='number'
+					placeholder='Default: 10'
+					min='0'
+					disabled={true || this.state.maze !== null}
+				/>
+			</div>
+
+			<div>
+				<label>Maze Height</label>
+				<input
+					type='number'
+					placeholder='Default: 10'
+					min='0'
+					disabled={true || this.state.maze !== null}
+				/>
+			</div>
+
+			<div>
+				<label>Autogen Interval</label>
+				<input
+					type='number'
+					placeholder='Default: 300'
+					min='0'
+					disabled={true}
+				/>
+			</div>
+
+			<hr />
+
 			<input
 				type='button'
 				value='↪️ Generate One Step'
 				disabled={this.state.maze === null}
 
 				onClick={() => {
-					// generate next step of algorithm.
+					// Generate next step of algorithm.
 					this.state.generate.next()
-					console.warn(this.state.maze.graph.data[0])
+					// Update state properties accordingly.
 					this.updateMazeGenerator()
 				}}
 			/>
