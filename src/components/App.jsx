@@ -14,6 +14,7 @@ export default class App extends React.Component {
 			maze: null,
 			graphic: null,
 			json: null,
+			nodeID: null,
 			lengthInput: null,
 			heightInput: null,
 			styleOption: null,
@@ -59,12 +60,17 @@ export default class App extends React.Component {
 			graphic = createEdgedTextGraphic(maze.graph)
 		}
 
+		const nodeID = (maze.graph.data.find((node) => {
+			return node.status === 'active'
+		}) || {}).id ?? null
+
 		const json = JSON.stringify(JSON.parse(maze.graph.json), null, 2)
 
 		this.setState({
 			maze: maze,
 			graphic: graphic,
 			json: json,
+			nodeID: nodeID,
 			generate: generate ?? maze.generator(),
 		})
 	}
@@ -74,6 +80,7 @@ export default class App extends React.Component {
 			maze: null,
 			graphic: null,
 			json: null,
+			nodeID: null,
 			generate: null,
 		})
 	}
@@ -85,7 +92,6 @@ export default class App extends React.Component {
 		else if (value === '' || isNaN(value)) {
 			value = null
 		}
-		console.log(value)
 		return value
 	}
 
@@ -285,10 +291,10 @@ export default class App extends React.Component {
 		<figure>
 			<div>
 				<label>active node: </label>
-				<output>{this.state.nodeID}</output>
+				<output>{this.state.nodeID ?? 'not selected'}</output>
 			</div>
-			<textarea value={this.state.graphic ?? ''} readOnly />
-			<textarea value={this.state.json ?? ''} readOnly />
+			<pre><code>{this.state.graphic ?? ''}</code></pre>
+			<pre><code>{this.state.json ?? ''}</code></pre>
 			<figcaption>
 				Figure 1: Maze Visual
 			</figcaption>
