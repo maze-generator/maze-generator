@@ -6979,34 +6979,25 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-maze-algorithms@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/maze-algorithms/-/maze-algorithms-0.3.3.tgz#54889919ed8d26830698b3c8602efd90aa26b8e8"
-  integrity sha512-xyctwjYFjxzUX+zkREAjc2kNp/bjrs4466ylHqy99lvqybpuiPUX6YSe9rhTzcIeiCf1q2Vva0k4gwNryhj3HQ==
+maze-algorithms@~0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/maze-algorithms/-/maze-algorithms-0.3.7.tgz#2ce6c40de7272085685a55c3728920f1f243bb93"
+  integrity sha512-eViNPZxogLQiXCOGDN9x36pM6B6ciLuo+j/nJ1sM/L+n8zaZS+6QFnLiRBvhWIeJyiunHnX84zKPLSP+DlFP/A==
   dependencies:
-    maze-utilities "^3.0.0"
-    tessellatron "^0.4.2"
+    maze-utilities "~3.0.0"
+    tessellatron "~0.5.0"
 
-maze-algorithms@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/maze-algorithms/-/maze-algorithms-0.3.4.tgz#4d80a5215f37491f0bd5764ddf150649e3fb3c28"
-  integrity sha512-Wmsh2+Pj59ZyVSG7u3umqzAaGE4iQIlRejanolIZTUTe5FdB8ruLhgGBNQKykmwFB0sNHktlUYjZ53M+mP11Dw==
-  dependencies:
-    maze-utilities "^3.0.0"
-    tessellatron "^0.4.3"
-
-maze-utilities@^3.0.0:
+maze-utilities@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/maze-utilities/-/maze-utilities-3.0.0.tgz#ffcc3da161b0687d54ad1878265dd9678266a0d6"
   integrity sha512-67UomrLBgoCYwWu6yiaCox8RZkpSivpcMO1P8ttw89j8U80zvHThvckXQvLlfF3NX+CggNylBJGFUo2d9G55wQ==
 
-maze-visualizer@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/maze-visualizer/-/maze-visualizer-0.1.0.tgz#3081b8b4059e0a1926002ce9dcd3616469ef81ed"
-  integrity sha512-PkOQDGe3ISmlbqWPE5pWUC/ZNwMUrtmIvRHNHCQcRFPRZDHBVzk1fUESMeYkSjWvBQnjqorhrpKUcH+WmWpbkg==
+maze-visualizer@~0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/maze-visualizer/-/maze-visualizer-0.1.3.tgz#b683d37704f2e0f39934647879726eabfcc8c9b6"
+  integrity sha512-WSWURw2m2SziQd+Y8JVTMpTdTw7Oc870Plv0wcz0pGR76lstBjktWrx40ZzutzJHlFOPAYOfcxjh9VfHuBtwBw==
   dependencies:
-    maze-algorithms "^0.3.3"
-    tessellatron "^0.4.2"
+    tessellatron "~0.5.0"
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -10392,15 +10383,10 @@ terser@^5.3.4:
     source-map "~0.7.2"
     source-map-support "~0.5.19"
 
-tessellatron@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/tessellatron/-/tessellatron-0.4.2.tgz#2d658deb678e3750db358a62172991cca33ce893"
-  integrity sha512-BPI0tEyf9duPN9/r2zCC/8HzO7dYVIs0mV8/kZ05I6yW7sCNnSMlD1wlQqhHUkdpNpey4BPiG8RW5k7/sXiCmw==
-
-tessellatron@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/tessellatron/-/tessellatron-0.4.3.tgz#d26a83de5b8aaee8552aa237a983d187baed0fd6"
-  integrity sha512-oUEBjZk/L4UDRsNPMEAeMDrAn+szTai70NQJ7aFskNPDZ1mmFhcJP0SXYH1bSyV0rYQ0LEZbWesQibW/fzjl1g==
+tessellatron@~0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/tessellatron/-/tessellatron-0.5.0.tgz#c0e64a6306bba7d19a191c0dcb773ad63a7ac38a"
+  integrity sha512-yksFvku3GiESnphqTKtMlQ8VvJXw4YTJrxRIm5qcuU+5xq3hWgdf5fB54y5x28FHJXlN7MhjS8DrBLcVGC25kA==
 
 test-exclude@^6.0.0:
   version "6.0.0"
