@@ -1,23 +1,21 @@
 {
-	"name": "my-app",
-	"homepage": "https://noltron000-coursework.github.io/",
-	"version": "0.2.0",
+	"name": "maze-maker",
+	"homepage": "https://maze-generator.github.io/",
+	"version": "0.3.1",
+	"private": true,
 	"dependencies": {
-		"@testing-library/jest-dom": "^4.2.4",
-		"@testing-library/react": "^9.3.2",
-		"@testing-library/user-event": "^7.1.2",
-		"@types/jest": "^24.0.0",
-		"@types/node": "^12.0.0",
-		"@types/react": "^16.9.0",
-		"@types/react-dom": "^16.9.0",
-		"maze-algorithms": "^0.1.0",
-		"maze-visualizer": "^0.0.1",
-		"react": "^16.13.0",
-		"react-dom": "^16.13.0",
-		"react-scripts": "3.4.0",
-		"tessellatron": "^0.2.0",
-		"typescript": "~3.7.2"
+		"@testing-library/jest-dom": "^5.11.4",
+		"@testing-library/react": "^11.1.0",
+		"@testing-library/user-event": "^12.1.10",
+		"gh-pages": "^3.1.0",
+		"maze-algorithms": "~0.3.7",
+		"maze-visualizer": "~0.1.3",
+		"react": "^17.0.1",
+		"react-dom": "^17.0.1",
+		"react-scripts": "4.0.1",
+		"web-vitals": "^0.2.4"
 	},
+	"devDependencies": {},
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
@@ -27,22 +25,14 @@
 		"deploy": "gh-pages -b master -d build"
 	},
 	"eslintConfig": {
-		"extends": "react-app"
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
+		"extends": [
+			"react-app",
+			"react-app/jest"
 		]
 	},
-	"devDependencies": {
-		"gh-pages": "^2.2.0",
-		"ts-node": "^8.8.1"
-	}
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not op_mini all"
+	]
 }
