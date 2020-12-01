@@ -10,6 +10,7 @@ export default class App extends React.Component {
 	constructor () {
 		super()
 
+		this.intervalTimer = null
 		this.state = {
 			maze: null,
 			graphic: null,
@@ -17,9 +18,28 @@ export default class App extends React.Component {
 			nodeID: null,
 			lengthInput: null,
 			heightInput: null,
+			intervalInput: null,
 			styleOption: null,
 			methodOption: null,
 			generate: null,
+			playMode: null,
+		}
+	}
+
+	componentDidMount() {
+		this.intervalTimer = setInterval(() => this.tick(), this.intervalInput ?? 200)
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.intervalTimer)
+	}
+
+	tick() {
+		if (this.state.playMode) {
+			// Generate next step of algorithm.
+			this.state.generate.next()
+			// Update state properties accordingly.f
+			this.updateMazeGenerator()
 		}
 	}
 
@@ -82,6 +102,7 @@ export default class App extends React.Component {
 			json: null,
 			nodeID: null,
 			generate: null,
+			playMode: null
 		})
 	}
 
@@ -234,9 +255,19 @@ export default class App extends React.Component {
 				<input
 					className='input-box'
 					type='number'
-					placeholder='Default: 300'
+					placeholder='Default: 100'
 					min='0'
-					disabled={true}
+					disabled={this.state.playMode}
+
+					onChange={(event) => {
+						let {value} = event.target
+						if (value !== null) {
+							value = this.validateNaturalNumber(parseInt(value))
+						}
+						// Clear and reset interval timer.
+						clearInterval(this.intervalTimer)
+						this.intervalTimer = setInterval(() => this.tick(), value ?? 100)
+					}}
 				/>
 			</div>
 
@@ -246,7 +277,7 @@ export default class App extends React.Component {
 				className='button'
 				type='button'
 				value='↪️ Generate One Step'
-				disabled={this.state.maze === null}
+				disabled={this.state.maze === null || this.state.playMode}
 
 				onClick={() => {
 					// Generate next step of algorithm.
@@ -259,14 +290,10 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='⏯ Play/Pause'
-				disabled={true}
+				value={this.state.playMode ? '⏸️ Pause' : '▶️ Play'}
+				disabled={this.state.maze === null}
 
-				onClick={() => {
-				// generate all steps of the algorithm.
-					for (const _ of this.state.generate) {}
-					this.updateGraphic()
-				}}
+				onClick={() => this.setState({playMode: !this.state.playMode})}
 			/>
 
 			<input
