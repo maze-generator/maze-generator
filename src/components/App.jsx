@@ -277,7 +277,7 @@ export default class App extends React.Component {
 				className='button'
 				type='button'
 				value='↪️ Generate One Step'
-				disabled={this.state.maze === null}
+				disabled={this.state.maze === null || this.state.playMode}
 
 				onClick={() => {
 					// Generate next step of algorithm.
@@ -290,7 +290,7 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='⏯ Play/Pause'
+				value={this.state.playMode ? '⏸️ Pause' : '▶️ Play'}
 				disabled={this.state.maze === null}
 
 				onClick={() => this.setState({playMode: !this.state.playMode})}
