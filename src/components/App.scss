@@ -1,3 +1,52 @@
+/*
+Breakpoints:
+- ≤300 + 300 (for ants)
+- <600 + 300 (small mobile) 240p - 360p
+- <900 + 300 (large mobile / tablet) 480p
+- <1200+ 300 (tablet / shitty screen / partial screen)
+- <1800+ 600 (medium screen) 720p
+- <2400+ 600 (normal screens) 1080p
+- <3600+1200 (large screens) 1440p
+- <4800+1200 (4k screens) 2560p
+
+
+Standard Video Sizes
+240p:  352x
+360p:  480x
+480p:  858x
+720p:  1280x
+1080p: 1920x
+1440p: 2560x
+2160p: 3860x
+
+Interesting Device Sizes
+*/
+
+@mixin for-tiny-wearables {
+	@media (min-width: 0px) {}
+}
+@mixin for-small-phones {
+	@media (min-width: 300px) {}
+}
+@mixin for-small-tablets {
+	@media (min-width: 600px) {}
+}
+@mixin for-large-tablets {
+	@media (min-width: 900px) {}
+}
+@mixin for-low-res-monitors {
+	@media (min-width: 1200px) {}
+}
+@mixin for-standard-monitors {
+	@media (min-width: 1800px) {}
+}
+@mixin for-high-res-monitors {
+	@media (min-width: 2400px) {}
+}
+@mixin for-extreme-monitors {
+	@media (min-width: 4200px) {}
+}
+
 pre, code {
 	font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace
 }
