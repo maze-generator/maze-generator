@@ -36,10 +36,17 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
-		this.intervalTimer = setInterval(() => this.tick(), this.state.intervalInput ?? 200)
+		this.intervalTimer = setInterval(
+			// Give the timer function.
+			() => this.tick(),
+
+			// Determine the interval amount.
+			this.state.intervalInput ?? 200,
+		)
 	}
 
 	componentWillUnmount() {
+		// When the component is gone, destroy the timer.
 		clearInterval(this.intervalTimer)
 	}
 
@@ -47,7 +54,7 @@ export default class App extends React.Component {
 		if (this.state.playMode) {
 			// Generate next step of algorithm.
 			this.generate.next()
-			// Update state properties accordingly.f
+			// Update state properties accordingly.
 			this.updateMazeGenerator()
 		}
 	}
@@ -89,9 +96,11 @@ export default class App extends React.Component {
 			graphic = createEdgedTextGraphic(maze.graph)
 		}
 
-		const nodeID = (maze.graph.data.find((node) => {
-			return node.status === 'active'
-		}) || {}).id ?? null
+		const nodeID = (
+			maze.graph.data.find((node) => {
+				return node.status === 'active'
+			}) ?? {}
+		).id ?? null
 
 		const json = JSON.stringify(JSON.parse(maze.graph.json), null, 2)
 
