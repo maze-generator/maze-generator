@@ -22,31 +22,86 @@ Standard Video Sizes
 Interesting Device Sizes
 */
 
-@mixin for-tiny-wearables {
-	@media (min-width: 0px) {}
+@mixin for-tiny-wearables-up {
+	@media (min-width: 0px) {@content;}
 }
-@mixin for-small-phones {
-	@media (min-width: 300px) {}
+@mixin for-small-phones-up {
+	@media (min-width: 300px) {@content;}
 }
-@mixin for-small-tablets {
-	@media (min-width: 600px) {}
+@mixin for-small-tablets-up {
+	@media (min-width: 600px) {@content;}
 }
-@mixin for-large-tablets {
-	@media (min-width: 900px) {}
+@mixin for-large-tablets-up {
+	@media (min-width: 900px) {@content;}
 }
-@mixin for-low-res-monitors {
-	@media (min-width: 1200px) {}
+@mixin for-low-res-monitors-up {
+	@media (min-width: 1200px) {@content;}
 }
-@mixin for-standard-monitors {
-	@media (min-width: 1800px) {}
+@mixin for-standard-monitors-up {
+	@media (min-width: 1800px) {@content;}
 }
-@mixin for-high-res-monitors {
-	@media (min-width: 2400px) {}
+@mixin for-high-res-monitors-up {
+	@media (min-width: 2400px) {@content;}
 }
 @mixin for-extreme-monitors {
-	@media (min-width: 4200px) {}
+	@media (min-width: 4200px) {@content;}
+}
+
+// global tags & elements
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	background-color: #666
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-align: center;
 }
 
 pre, code {
 	font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace
+}
+
+input.input-box {
+	display: block;
+}
+
+#root {
+	border-radius: 50px;
+	background-color: #FFF;
+	min-height: 100vh;
+	padding: 0 24px 0 24px;
+	border: 20px black solid;
+
+	display: flex;
+	flex-direction: column;
+
+	// center contents within height of box
+	justify-content: to-upper-case($string: "");
+	// center items horizontally with one another
+	align-items: center;
+
+
+
+	@include for-tiny-wearables-up {
+		margin: 12px 12px 12px 12px;
+		width: auto;
+	}
+	@include for-small-tablets-up {
+		margin: 12px auto 12px auto;
+		width: 600px - (12px * 2);
+	}
+	@include for-low-res-monitors-up {
+		width: 900px;
+	}
+	@include for-standard-monitors-up {
+		width: 1200px;
+	}
+	@include for-high-res-monitors-up {
+		margin: auto 600px auto 600px;
+		width: auto;
+	}
 }
