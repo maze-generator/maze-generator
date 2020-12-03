@@ -10,24 +10,33 @@ export default class App extends React.Component {
 	constructor () {
 		super()
 
+		// these items are programmatic "strings" or "threads"
+		// that "tug" the ties of various components.
 		this.intervalTimer = null
+		this.generate = null
+
 		this.state = {
+			// this is the primary object the app focuses on.
 			maze: null,
+
+			// it can generate a few different things.
 			graphic: null,
 			json: null,
 			nodeID: null,
+
+			// to control the object and its generation,
+			// the user gets some input options.
 			lengthInput: null,
 			heightInput: null,
 			intervalInput: null,
 			styleOption: null,
 			methodOption: null,
-			generate: null,
 			playMode: null,
 		}
 	}
 
 	componentDidMount() {
-		this.intervalTimer = setInterval(() => this.tick(), this.intervalInput ?? 200)
+		this.intervalTimer = setInterval(() => this.tick(), this.state.intervalInput ?? 200)
 	}
 
 	componentWillUnmount() {
@@ -37,7 +46,7 @@ export default class App extends React.Component {
 	tick() {
 		if (this.state.playMode) {
 			// Generate next step of algorithm.
-			this.state.generate.next()
+			this.generate.next()
 			// Update state properties accordingly.f
 			this.updateMazeGenerator()
 		}
@@ -66,14 +75,14 @@ export default class App extends React.Component {
 	}
 
 	updateMazeGenerator () {
-		let {maze, generate, styleOption} = this.state
+		let {maze, styleOption} = this.state
 
 		let graphic = null
 		if (styleOption === null) {
 			this.setState({styleOption: 'pipe'})
 			graphic = createPipedTextGraphic(maze.graph)
 		}
-		if (styleOption === 'pipe') {
+		else if (styleOption === 'pipe') {
 			graphic = createPipedTextGraphic(maze.graph)
 		}
 		else if (styleOption === 'edge') {
@@ -86,16 +95,17 @@ export default class App extends React.Component {
 
 		const json = JSON.stringify(JSON.parse(maze.graph.json), null, 2)
 
+		this.generate ??= maze.generator()
 		this.setState({
 			maze: maze,
 			graphic: graphic,
 			json: json,
 			nodeID: nodeID,
-			generate: generate ?? maze.generator(),
 		})
 	}
 
 	clearMazeGenerator () {
+		this.generate = null
 		this.setState({
 			maze: null,
 			graphic: null,
@@ -281,7 +291,7 @@ export default class App extends React.Component {
 
 				onClick={() => {
 					// Generate next step of algorithm.
-					this.state.generate.next()
+					this.generate.next()
 					// Update state properties accordingly.
 					this.updateMazeGenerator()
 				}}
@@ -316,14 +326,14 @@ export default class App extends React.Component {
 		</fieldset>
 
 		<figure>
-			<div>
+			{/* <div>
 				<label>active node: </label>
 				<output>{this.state.nodeID ?? 'not selected'}</output>
-			</div>
+			</div> */}
 			<pre><code>{this.state.graphic ?? ''}</code></pre>
-			<pre><code>{this.state.json ?? ''}</code></pre>
+			{/* <pre><code>{this.state.json ?? ''}</code></pre> */}
 			<figcaption>
-				Figure 1: Maze Visual
+				ASCII Maze
 			</figcaption>
 		</figure>
 	</> ) }
