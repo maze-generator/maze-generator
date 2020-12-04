@@ -25,8 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 
 ### gitignore.io generated files ###
-# Created by https://www.toptal.com/developers/gitignore/api/react,macos,windows,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=react,macos,windows,node
+# Created by https://www.toptal.com/developers/gitignore/api/node,react,macos,windows,sass
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,react,macos,windows,sass
 
 ### macOS ###
 # General
@@ -181,6 +181,13 @@ psd
 thumb
 sketch
 
+### Sass ###
+.sass-cache/
+*.css
+*.css.map
+*.sass.map
+*.scss.map
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -207,4 +214,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/react,macos,windows,node
+# End of https://www.toptal.com/developers/gitignore/api/node,react,macos,windows,sass

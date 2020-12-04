@@ -10,35 +10,51 @@ export default class App extends React.Component {
 	constructor () {
 		super()
 
+		// these items are programmatic "strings" or "threads"
+		// that "tug" the ties of various components.
 		this.intervalTimer = null
+		this.generate = null
+
 		this.state = {
+			// this is the primary object the app focuses on.
 			maze: null,
+
+			// it can generate a few different things.
 			graphic: null,
 			json: null,
 			nodeID: null,
+
+			// to control the object and its generation,
+			// the user gets some input options.
 			lengthInput: null,
 			heightInput: null,
 			intervalInput: null,
 			styleOption: null,
 			methodOption: null,
-			generate: null,
 			playMode: null,
 		}
 	}
 
 	componentDidMount() {
-		this.intervalTimer = setInterval(() => this.tick(), this.intervalInput ?? 200)
+		this.intervalTimer = setInterval(
+			// Give the timer function.
+			() => this.tick(),
+
+			// Determine the interval amount.
+			this.state.intervalInput ?? 100,
+		)
 	}
 
 	componentWillUnmount() {
+		// When the component is gone, destroy the timer.
 		clearInterval(this.intervalTimer)
 	}
 
 	tick() {
 		if (this.state.playMode) {
 			// Generate next step of algorithm.
-			this.state.generate.next()
-			// Update state properties accordingly.f
+			this.generate.next()
+			// Update state properties accordingly.
 			this.updateMazeGenerator()
 		}
 	}
@@ -66,36 +82,39 @@ export default class App extends React.Component {
 	}
 
 	updateMazeGenerator () {
-		let {maze, generate, styleOption} = this.state
+		let {maze, styleOption} = this.state
 
 		let graphic = null
 		if (styleOption === null) {
 			this.setState({styleOption: 'pipe'})
 			graphic = createPipedTextGraphic(maze.graph)
 		}
-		if (styleOption === 'pipe') {
+		else if (styleOption === 'pipe') {
 			graphic = createPipedTextGraphic(maze.graph)
 		}
 		else if (styleOption === 'edge') {
 			graphic = createEdgedTextGraphic(maze.graph)
 		}
 
-		const nodeID = (maze.graph.data.find((node) => {
-			return node.status === 'active'
-		}) || {}).id ?? null
+		const nodeID = (
+			maze.graph.data.find((node) => {
+				return node.status === 'active'
+			}) ?? {}
+		).id ?? null
 
 		const json = JSON.stringify(JSON.parse(maze.graph.json), null, 2)
 
+		this.generate ??= maze.generator()
 		this.setState({
 			maze: maze,
 			graphic: graphic,
 			json: json,
 			nodeID: nodeID,
-			generate: generate ?? maze.generator(),
 		})
 	}
 
 	clearMazeGenerator () {
+		this.generate = null
 		this.setState({
 			maze: null,
 			graphic: null,
@@ -122,7 +141,11 @@ export default class App extends React.Component {
 		</h1>
 
 		<p>
-			Generate your maze by clicking the button a bunch.
+			Welcome to my maze generator!
+		</p>
+		<p>
+			Not only is this open-source maze generator available on github, but its components are available as npm packages.
+			That includes the maze algorithms, the graph representation, and the ASCII graph visualizer as well.
 		</p>
 
 		<fieldset>
@@ -145,7 +168,7 @@ export default class App extends React.Component {
 							})}
 						/>
 						<label htmlFor='iterative-depth-first-option'>
-							Iterative Depth-First Search
+							Iterative Depth-First Path
 						</label>
 					</div>
 				</div>
@@ -165,7 +188,7 @@ export default class App extends React.Component {
 							})}
 						/>
 						<label htmlFor='iterative-breadth-first-option'>
-							Iterative Breadth-First Search
+							Iterative Breadth-First Path
 						</label>
 					</div>
 				</div>
@@ -251,24 +274,38 @@ export default class App extends React.Component {
 			</div>
 
 			<div>
-				<label>Autogen Interval</label>
+				<label>Autogen Speed</label>
 				<input
 					className='input-box'
-					type='number'
-					placeholder='Default: 100'
+					type='range'
+					list='tickmarks'
 					min='0'
+					max='300'
+					value={this.state.intervalInput ?? 200}
+					step='5'
+
 					disabled={this.state.playMode}
 
 					onChange={(event) => {
 						let {value} = event.target
 						if (value !== null) {
-							value = this.validateNaturalNumber(parseInt(value))
+							value = this.validateNaturalNumber(300 - parseInt(value))
 						}
 						// Clear and reset interval timer.
 						clearInterval(this.intervalTimer)
 						this.intervalTimer = setInterval(() => this.tick(), value ?? 100)
+						this.setState({intervalInput: 300 - value})
 					}}
 				/>
+				<datalist id='tickmarks'>
+					<option value='0' label='slow'></option>
+					<option value='100'></option>
+					<option value='200'  label='fast'></option>
+					<option value='225'></option>
+					<option value='250'></option>
+					<option value='275'></option>
+					<option value='300'></option>
+				</datalist>
 			</div>
 
 			<hr />
@@ -276,12 +313,12 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='↪️ Generate One Step'
+				value='↪️ Step'
 				disabled={this.state.maze === null || this.state.playMode}
 
 				onClick={() => {
 					// Generate next step of algorithm.
-					this.state.generate.next()
+					this.generate.next()
 					// Update state properties accordingly.
 					this.updateMazeGenerator()
 				}}
@@ -299,7 +336,7 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='⏹ Stop Graphic'
+				value='⏹ Stop'
 				disabled={this.state.maze === null}
 
 				onClick={() => {this.clearMazeGenerator()}}
@@ -308,22 +345,29 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='🔄 Start New Maze'
+				value='🔄 Create New'
 				disabled={this.state.maze !== null}
 
 				onClick={() => {this.createMazeGenerator()}}
 			/>
 		</fieldset>
 
+		<progress
+			max={this.state.maze?.graph?.data?.length ?? 1}
+			value={this.state.maze?.graph?.data?.filter((cell) => {
+				return cell.status === 'complete'
+			}).length ?? 0}
+		/>
+
 		<figure>
-			<div>
+			{/* <div>
 				<label>active node: </label>
 				<output>{this.state.nodeID ?? 'not selected'}</output>
-			</div>
+			</div> */}
 			<pre><code>{this.state.graphic ?? ''}</code></pre>
-			<pre><code>{this.state.json ?? ''}</code></pre>
+			{/* <pre><code>{this.state.json ?? ''}</code></pre> */}
 			<figcaption>
-				Figure 1: Maze Visual
+				ASCII Maze
 			</figcaption>
 		</figure>
 	</> ) }

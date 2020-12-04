@@ -1,0 +1,193 @@
+// fonts
+
+@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
+// variables
+
+$ink: #15212C;
+$paper: #F1E5D0;
+$front-primary: #D84144;
+$front-secondary: #DE6929;
+$back-primary: #148B90;
+$back-secondary: #749E9E;
+
+// mixins
+/*
+Breakpoints:
+- ≤300 + 300 (for ants)
+- <600 + 300 (small mobile) 240p - 360p
+- <900 + 300 (large mobile / tablet) 480p
+- <1200+ 300 (tablet / shitty screen / partial screen)
+- <1800+ 600 (medium screen) 720p
+- <2400+ 600 (normal screens) 1080p
+- <3600+1200 (large screens) 1440p
+- <4800+1200 (4k screens) 2560p
+
+
+Standard Video Sizes
+240p:  352x
+360p:  480x
+480p:  858x
+720p:  1280x
+1080p: 1920x
+1440p: 2560x
+2160p: 3860x
+
+Interesting Device Sizes
+*/
+
+@mixin for-tiny-wearables-up {
+	@media (min-width: 0px) {@content;}
+}
+@mixin for-small-phones-up {
+	@media (min-width: 300px) {@content;}
+}
+@mixin for-small-tablets-up {
+	@media (min-width: 600px) {@content;}
+}
+@mixin for-large-tablets-up {
+	@media (min-width: 900px) {@content;}
+}
+@mixin for-low-res-monitors-up {
+	@media (min-width: 1200px) {@content;}
+}
+@mixin for-standard-monitors-up {
+	@media (min-width: 1800px) {@content;}
+}
+@mixin for-high-res-monitors-up {
+	@media (min-width: 2400px) {@content;}
+}
+@mixin for-extreme-monitors {
+	@media (min-width: 4200px) {@content;}
+}
+
+// global tags & elements
+
+* {
+	color: $ink;
+	box-sizing: border-box;
+}
+
+html {
+	background-color: $back-primary;
+	background-size: 48px 48px;
+	background-image: linear-gradient(
+		45deg,
+		rgba($back-secondary, (3/16)) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba($back-secondary, (3/16)) 50%,
+		rgba($back-secondary, (3/16)) 75%,
+		transparent 75%,
+		transparent 100%
+	);
+	background-attachment: fixed;
+	background-position: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-align: center;
+}
+
+h1 {
+	line-height: 0.75;
+	font-size: 3em;
+	color: $ink;
+	font-family: 'Parisienne', cursive;
+	text-shadow:
+		$back-primary 2px 2px,
+		$back-secondary 4px 4px,
+		// $front-primary 4.5px 4.5px;
+}
+
+p {
+	align-self: flex-start;
+}
+
+p + p {
+	margin-top: 0;
+}
+
+figure {
+	margin: 0;
+}
+
+pre {
+	margin: 0;
+	font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace;
+	code {
+		margin: 0;
+		display: flex;
+		overflow: scroll;
+	}
+}
+
+fieldset {
+	min-width: 80%;
+	border-style: solid;
+	border-width: 2px;
+	border-color: $front-primary;
+	border-radius: 12px;
+	background-color: rgba($front-secondary, (1/4));
+}
+
+figcaption, legend {
+	font-weight: bold;
+}
+
+input.input-box {
+	display: block;
+}
+
+#root {
+	background-color: $paper;
+	background-size: 48px 48px;
+	background-image: linear-gradient(
+		45deg,
+		rgba(white, (1/8)) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(white, (1/8)) 50%,
+		rgba(white, (1/8)) 75%,
+		transparent 75%,
+		transparent 100%
+	);
+	background-attachment: scroll;
+
+	border-radius: 60px;
+	min-height: calc(100vh - 24px);
+	padding: 0 24px 0 24px;
+	border: 24px $ink solid;
+
+	display: flex;
+	flex-direction: column;
+
+	// center contents within height of box
+	justify-content: top;
+	// center items horizontally with one another
+	align-items: center;
+
+	@include for-tiny-wearables-up {
+		margin: 12px 12px 12px 12px;
+		width: auto;
+	}
+	@include for-small-tablets-up {
+		margin: 12px auto 12px auto;
+		width: 600px - (12px * 2);
+	}
+	@include for-low-res-monitors-up {
+		width: 900px;
+	}
+	@include for-standard-monitors-up {
+		width: 1200px;
+	}
+	@include for-high-res-monitors-up {
+		margin: auto 600px auto 600px;
+		width: auto;
+	}
+
+	* {
+		max-width: 100%;
+	}
+}
