@@ -2,6 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@1,900&display=swap');
 
 // variables
 
@@ -117,6 +118,7 @@ pre {
 	margin: 0;
 	font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace;
 	code {
+		font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace;
 		margin: 0;
 		display: flex;
 		overflow: scroll;
