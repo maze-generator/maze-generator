@@ -41,7 +41,7 @@ export default class App extends React.Component {
 			() => this.tick(),
 
 			// Determine the interval amount.
-			this.state.intervalInput ?? 200,
+			this.state.intervalInput ?? 100,
 		)
 	}
 
@@ -141,7 +141,11 @@ export default class App extends React.Component {
 		</h1>
 
 		<p>
-			Generate your maze by clicking the button a bunch.
+			Welcome to my maze generator!
+		</p>
+		<p>
+			Not only is this open-source maze generator available on github, but its components are available as npm packages.
+			That includes the maze algorithms, the graph representation, and the ASCII graph visualizer as well.
 		</p>
 
 		<fieldset>
@@ -164,7 +168,7 @@ export default class App extends React.Component {
 							})}
 						/>
 						<label htmlFor='iterative-depth-first-option'>
-							Iterative Depth-First Search
+							Iterative Depth-First Path
 						</label>
 					</div>
 				</div>
@@ -184,7 +188,7 @@ export default class App extends React.Component {
 							})}
 						/>
 						<label htmlFor='iterative-breadth-first-option'>
-							Iterative Breadth-First Search
+							Iterative Breadth-First Path
 						</label>
 					</div>
 				</div>
@@ -270,24 +274,38 @@ export default class App extends React.Component {
 			</div>
 
 			<div>
-				<label>Autogen Interval</label>
+				<label>Autogen Speed</label>
 				<input
 					className='input-box'
-					type='number'
-					placeholder='Default: 100'
+					type='range'
+					list='tickmarks'
 					min='0'
+					max='300'
+					value={this.state.intervalInput ?? 200}
+					step='5'
+
 					disabled={this.state.playMode}
 
 					onChange={(event) => {
 						let {value} = event.target
 						if (value !== null) {
-							value = this.validateNaturalNumber(parseInt(value))
+							value = this.validateNaturalNumber(300 - parseInt(value))
 						}
 						// Clear and reset interval timer.
 						clearInterval(this.intervalTimer)
 						this.intervalTimer = setInterval(() => this.tick(), value ?? 100)
+						this.setState({intervalInput: 300 - value})
 					}}
 				/>
+				<datalist id='tickmarks'>
+					<option value='0' label='slow'></option>
+					<option value='100'></option>
+					<option value='200'  label='fast'></option>
+					<option value='225'></option>
+					<option value='250'></option>
+					<option value='275'></option>
+					<option value='300'></option>
+				</datalist>
 			</div>
 
 			<hr />
@@ -295,7 +313,7 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='↪️ Generate One Step'
+				value='↪️ Step'
 				disabled={this.state.maze === null || this.state.playMode}
 
 				onClick={() => {
@@ -318,7 +336,7 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='⏹ Stop Graphic'
+				value='⏹ Stop'
 				disabled={this.state.maze === null}
 
 				onClick={() => {this.clearMazeGenerator()}}
@@ -327,7 +345,7 @@ export default class App extends React.Component {
 			<input
 				className='button'
 				type='button'
-				value='🔄 Start New Maze'
+				value='🔄 Create New'
 				disabled={this.state.maze !== null}
 
 				onClick={() => {this.createMazeGenerator()}}
@@ -343,6 +361,15 @@ export default class App extends React.Component {
 			{/* <pre><code>{this.state.json ?? ''}</code></pre> */}
 			<figcaption>
 				ASCII Maze
+				<div>
+					{/* <label>% Completed</label> */}
+					<progress
+						max={this.state.maze?.graph?.data?.length ?? 1}
+						value={this.state.maze?.graph?.data?.filter((cell) => {
+							return cell.status === 'complete'
+						}).length ?? 0}
+					/>
+				</div>
 			</figcaption>
 		</figure>
 	</> ) }
