@@ -109,9 +109,15 @@ p + p {
 	margin-top: 0;
 }
 
+figure {
+	margin: 0;
+}
+
 pre {
+	margin: 0;
 	font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace;
 	code {
+		margin: 0;
 		display: flex;
 		overflow: scroll;
 	}

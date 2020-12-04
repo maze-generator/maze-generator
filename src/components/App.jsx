@@ -352,6 +352,13 @@ export default class App extends React.Component {
 			/>
 		</fieldset>
 
+		<progress
+			max={this.state.maze?.graph?.data?.length ?? 1}
+			value={this.state.maze?.graph?.data?.filter((cell) => {
+				return cell.status === 'complete'
+			}).length ?? 0}
+		/>
+
 		<figure>
 			{/* <div>
 				<label>active node: </label>
@@ -361,15 +368,6 @@ export default class App extends React.Component {
 			{/* <pre><code>{this.state.json ?? ''}</code></pre> */}
 			<figcaption>
 				ASCII Maze
-				<div>
-					{/* <label>% Completed</label> */}
-					<progress
-						max={this.state.maze?.graph?.data?.length ?? 1}
-						value={this.state.maze?.graph?.data?.filter((cell) => {
-							return cell.status === 'complete'
-						}).length ?? 0}
-					/>
-				</div>
 			</figcaption>
 		</figure>
 	</> ) }
