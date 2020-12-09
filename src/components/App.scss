@@ -2,7 +2,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@1,900&display=swap');
 
 // variables
 
@@ -65,9 +64,8 @@ Interesting Device Sizes
 
 // global tags & elements
 
-* {
+body * {
 	color: $ink;
-	box-sizing: border-box;
 }
 
 html {
@@ -106,27 +104,14 @@ p {
 	align-self: flex-start;
 }
 
-p + p {
-	margin-top: 0;
-}
-
-figure {
-	margin: 0;
-}
-
-pre {
-	margin: 0;
-	font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace;
-	code {
-		font-family: 'Menlo', 'Source Code Pro', 'Fira Code', 'Fira Mono', 'Overpass Mono', monospace;
-		margin: 0;
-		display: flex;
-		overflow: scroll;
-	}
+code {
+	display: flex;
+	overflow: scroll;
 }
 
 fieldset {
-	min-width: 80%;
+	min-width: min(80%, 500px);
+	// max-width: 500px;
 	border-style: solid;
 	border-width: 2px;
 	border-color: $front-primary;
