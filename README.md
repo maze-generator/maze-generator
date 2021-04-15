@@ -7,6 +7,13 @@ You can find the project instructions [here][instructions].
 This project was refactored during an intensive period.
 You can find the intensive proposal [here][proposal].
 
+## Usage
+To use on your local machine, follow these instructions:
+1. download this project onto your machine (using git, or as a .zip, etc).
+2. run `yarn` in your terminal to download required npm packages.
+3. run `yarn start` to begin running the project locally in a browser.
+4. open the project in your browser at http://localhost:3000/
+
 ## License
 The code is released under the [MIT License][license].
 
